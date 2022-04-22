@@ -73,8 +73,8 @@ async def complete_delete(call: types.CallbackQuery):
                       show_alert=True)
 
 async def complete_user_delete(call: types.CallbackQuery):
-    await bot_db.sql_delete(call.data.replace("delete ", ""))
-    await call.answer(text=f'{call.data.replace("delete ", "")} deleted',
+    await bot_db.delete_user(call.data.replace("del ", ""))
+    await call.answer(text=f'{call.data.replace("del ", "")} del',
                       show_alert=True)
 
 async def delete_data(message: types.Message):
@@ -93,8 +93,8 @@ async def delete_data(message: types.Message):
         )
 
 async def delete_user(message: types.Message):
-    selected_data = await bot_db.user_casual_select()
-    for show in selected_data:
+    selected_user = await bot_db.user_casual_select()
+    for show in selected_user:
         await bot.send_photo(
             chat_id=message.chat.id,
             photo=show[0],

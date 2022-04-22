@@ -68,8 +68,8 @@ async def sql_delete(data):
     """, (data,))
     connection.commit()
 
-async def user_delete(data):
+async def delete_user(data):
     cursor.execute("""
-    DELETE FROM my_users WHERE username == ?
-    """, (data,))
+        DELETE FROM my_users WHERE title == ?
+        """, (data,))
     connection.commit()
