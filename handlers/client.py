@@ -3,6 +3,9 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ParseMode
 from keyboards import client_kb
 from config import bot
 from database import bot_db
+from prosto_parser import animekisa
+from prosto_parser import aksessuary
+from prosto_parser import mini_game
 
 
 async def hello(message: types.Message):
@@ -80,6 +83,22 @@ async def get_all_tvshow(message: types.Message):
 async def get_all_users(message: types.Message):
     await bot_db.user_select(message)
 
+
+async def parser_anime(message:types.Message):
+    data = animekisa.scrapy_script()
+    for i in data:
+        await bot.send_message(message.chat.id, i)
+
+async def parser_aksessuary(message:types.Message):
+    data = aksessuary.scrapy_aksessuary()
+    for i in data:
+        await bot.send_message(message.chat.id, i)
+
+async def parser_geme(message:types.Message):
+    data = mini_game.scrapy_script_game()
+    for i in data:
+        await bot.send_message(message.chat.id, i)
+
 def register_handlers_client(dp: Dispatcher):
     dp.register_message_handler(hello,commands=['start'])
     dp.register_message_handler(help, commands=['help'])
@@ -89,3 +108,6 @@ def register_handlers_client(dp: Dispatcher):
     dp.register_message_handler(quiz_1, commands=['quiz'])
     dp.register_message_handler(get_all_tvshow, commands=['tvshow'])
     dp.register_message_handler(get_all_users, commands=['users'])
+    dp.register_message_handler(parser_anime, commands=['skrapy'])
+    dp.register_message_handler(parser_aksessuary, commands=['aksessuars'])
+    dp.register_message_handler(parser_geme, commands=['game'])
